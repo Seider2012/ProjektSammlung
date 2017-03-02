@@ -1,0 +1,94 @@
+ <!doctype html>
+ <html>
+ <head>
+	<script>
+function suche() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  document.getElementById("chat").innerHTML = this.responseText;
+    }
+  };
+
+
+  var t1 = document.getElementById("ri").value;
+  var t2 = document.getElementById("ki").value;
+  var t3 = document.getElementById("si").value;
+  var t4 = document.getElementById("su").value;
+
+
+
+  xhttp.open("POST", "searchMessages.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("rechnungsid=" + window.encodeURIComponent(t1)+"&"+"kundenid=" + window.encodeURIComponent(t2)+"&"+"shopid=" + window.encodeURIComponent(t3)+"&"+"summe=" + window.encodeURIComponent(t4));
+} 
+
+function sendData() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    }
+  };
+
+  var t1 = document.getElementById("ri").value;
+  var t2 = document.getElementById("ki").value;
+  var t3 = document.getElementById("si").value;
+  var t4 = document.getElementById("su").value;
+  
+  xhttp.open("POST", "sendMessages.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("rechnungsid=" + window.encodeURIComponent(t1)+"&"+"kundenid=" + window.encodeURIComponent(t2)+"&"+"shopid=" + window.encodeURIComponent(t3)+"&"+"summe=" + window.encodeURIComponent(t4));
+
+readData();
+
+} 
+function deleteData() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    }
+  };
+
+  var t1 = document.getElementById("ri").value;
+
+  
+  xhttp.open("POST", "deleteEintrag.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("rechnungsid=" + window.encodeURIComponent(t1));
+
+readData();
+
+} 
+
+function readData(){
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  document.getElementById("chat").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST", "readMessages.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+}
+window.onload=function(){
+	window.setInterval(readData,2000);
+}
+	</script>
+</head>
+<body>
+<div>
+	<p id="chat"></p>
+</div>
+<form>
+	RechnungsID: <input type="text" name="text1" id="ri"></input><br>
+	KundenID <input type="text" name="text2" id="ki"></input><br>
+	ShopID: <input type="text" name="text3" id="si"></input><br>
+	Summe: <input type="text" name="text4" id="su"></input><br>
+	<input type="button" value="Rechnung erstellen" onClick="sendData()">
+	<input type="button" value="Rechnung suchen" onClick="suche()">
+	<input type="button" value="Rechnung löschen" onClick="deleteData()">
+</form>
+</body>
+</html> 
