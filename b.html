@@ -36,16 +36,15 @@
 		var avg=false;
 		var t = [];
 		var filename;
-		var jahr= '2016';
 	
 
 		function setavg(antwort){
 		avg = Boolean(antwort=="true");
-			if(Boolean(antwort)){		
-				console.log("true  "+avg);
-			} else{
-				console.log("false   "+avg);
-			}
+		if(Boolean(antwort)){		
+		console.log("true  "+avg);
+} else{
+console.log("false   "+avg);
+}
 		}
 
 		// Zum auslesen vom txt
@@ -76,7 +75,7 @@
 			xhttp.send();
 		}
 
-		
+		// Von den Werten, eine Grafik bilden
 		function visual() {
 
 			allText = document.getElementById("demo").innerHTML;
@@ -170,7 +169,7 @@
 			for (var c = 0; c < 12; c++) {
 				for (var a = 0; a < data.length - 2; a++) { // -2 weil 2 zeilen zu viel gezählt wird
 					if (timeConverterMonth(data[a].x) == months[c]
-							&& timeConverterYear(data[a].x) == jahr
+							&& timeConverterYear(data[a].x) == '2016'
 							&& timeConverterDay(data[a].x) != timeConverterDay(data[a - 1].x)) {
 						summe.push({
 							"x" : data[a].x,
@@ -284,8 +283,8 @@
 
 
 				}
-				if(avg){
-					t[c].frequency = t[c].frequency / lDays[c];				
+if(avg){
+				t[c].frequency = t[c].frequency / lDays[c];				
 				}
 
 			}
@@ -302,46 +301,46 @@
 			}
 			filename = "data";
 
-			if(strom){
-				if(avg){
-					filename= "strom_durchschnitt";
-				} else{
-					filename = "strom_absolut";
-				}
-			} else{
-				if(avg){
-					filename= "wasser_durchschnitt";
-				} else{
-					filename = "wasser_absolut";
-				}
-			}
+if(strom){
+if(avg){
+filename= "strom_durchschnitt";
+} else{
+filename = "strom_absolut";
+}
+} else{
+if(avg){
+filename= "wasser_durchschnitt";
+} else{
+filename = "wasser_absolut";
+}
+}
 
 	
 			var blob = new Blob([ ts ], {
 				type : "text/plain;charset=utf-8"
 			});
 			saveAs(blob, filename + ".tsv");
-			filename = filename +".tsv";
+filename = filename +".tsv";
 		}
 
 		function bar() {
 
 
-			if(strom){
-				if(avg){
-					filename= "strom_durchschnitt";
-				} else{
-					filename = "strom_absolut";
-				}
-			} else{
-				if(avg){
-					filename= "wasser_durchschnitt";
-				} else{
-					filename = "wasser_absolut";
-				}
-			}
-			document.getElementById("di").innerHTML = filename;
-			filename = filename +".tsv";
+if(strom){
+if(avg){
+filename= "strom_durchschnitt";
+} else{
+filename = "strom_absolut";
+}
+} else{
+if(avg){
+filename= "wasser_durchschnitt";
+} else{
+filename = "wasser_absolut";
+}
+}
+document.getElementById("di").innerHTML = filename;
+filename = filename +".tsv";
 
 			var svg = d3.select("svg"), margin = {
 				top : 20,
@@ -391,25 +390,6 @@
 			});
 
 		}
-
-		//--------------------------------------------------------------------
-		function writeDownloadLink(){
-		    try {
-		        var isFileSaverSupported = !!new Blob();
-		    } catch (e) {
-		        alert("blob not supported");
-		    }
-
-		    var html = d3.select("svg")
-		        .attr("title", "test2")
-		        .attr("version", 1.1)
-		        .attr("xmlns", "http://www.w3.org/2000/svg")
-		        .node().parentNode.innerHTML;
-		
-		    var blob = new Blob([html], {type: "image/svg+xml"});
-		    saveAs(blob, document.getElementById("di").innerHTML+".svg");
-		};
-
 
 		//____________________________________________________________________-
 		/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
